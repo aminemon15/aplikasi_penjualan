@@ -127,12 +127,12 @@ if($level !== 'admin')
 						<thead>
 							<tr>
 								<th style='width:35px;'>#</th>
-								<th >Nama Barang</th>
-								<th style='width:210px;'>Serial Number</th>
-								<th style='width:120px;'>Kelengkapan</th>
-								<th style='width:75px;'>Kerusakan</th>
-								<th style='width:125px;'>Penyelesaian</th>
-								<th style='width:40px;'></th>
+								<th style='width:120px'>Nama Barang</th>
+								<th style='width:120px;'>Serial Number</th>
+								<th style='width:160px;'>Kelengkapan</th>
+								<th style='width:100px;'>Kerusakan</th>
+								<th style='width:60px;'>Penyelesaian</th>
+								<th style='width:20px;'></th>
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -147,7 +147,7 @@ if($level !== 'admin')
 					<div class='row'>
 						<div class='col-sm-7'>
 							<textarea name='catatan' id='catatan' class='form-control' rows='2' placeholder="Catatan service (Jika Ada)" style='resize: vertical; width:83%;'></textarea>
-							
+
 							<br />
 							<p><i class='fa fa-keyboard-o fa-fw'></i> <b>Shortcut Keyboard : </b></p>
 							<div class='row'>
@@ -155,7 +155,7 @@ if($level !== 'admin')
 								<div class='col-sm-6'>F9 = Cetak Struk</div>
 								<div class='col-sm-6'>F8 = Fokus ke field bayar</div>
 								<div class='col-sm-6'>F10 = Simpan service</div>
-							</div> 
+							</div>
 						</div>
 						<div class='col-sm-5'>
 							<div class="form-horizontal">
@@ -249,17 +249,20 @@ function BarisBaru()
 	var Baris = "<tr>";
 		Baris += "<td>"+Nomor+"</td>";
 		Baris += "<td>";
-			Baris += "<input type='text' class='form-control' name='kode_barang[]' id='pencarian_kode' placeholder='Ketik Kode / Nama Barang'>";
+			Baris += "<input type='text' class='form-control' name='kode_barang[]' id='pencarian_kode' placeholder='Nama Barang'>";
 			Baris += "<div id='hasil_pencarian'></div>";
 		Baris += "</td>";
-		Baris += "<td></td>";
+		Baris += "<td>"
+		  Baris += "<input type='text' class='form-control' name='serial_number[]' id='sn' placeholder='serial number'>";
+			Baris += "<div id='sn'></div>";
+		Baris += "</td>";
 		Baris += "<td>";
-			Baris += "<input type='text' name='harga_satuan[]'>";
+			Baris += "<input type='text' class='form-control' name='Kelengkapan[]' id='Kelengkapan' placeholder='Kelengkapan'>";
 			Baris += "<span></span>";
 		Baris += "</td>";
-		Baris += "<td><input type='text' class='form-control' id='jumlah_beli' name='jumlah_beli[]' onkeypress='return check_int(event)' disabled></td>";
+		Baris += "<td><input type='text' class='form-control' id='Kerusakan' name='Kerusakan[]' placeholder='Kerusakan''></td>";
 		Baris += "<td>";
-			Baris += "<input type='text' name='sub_total[]'>";
+			Baris += "<input type='text' class='form-control' id='penyelesaian' name='penyelesaian[]' placeholder='penyelesaian'>";
 			Baris += "<span></span>";
 		Baris += "</td>";
 		Baris += "<td><button class='btn btn-default' id='HapusBaris'><i class='fa fa-times' style='color:red;'></i></button></td>";
@@ -335,10 +338,10 @@ function AutoCompleteGue(Lebar, KataKunci, Indexnya)
 	HitungTotalBayar();
 }
 
-//   
+//
 $(document).on('click', '#daftar-autocomplete li', function(){
 	$(this).parent().parent().parent().find('input').val($(this).find('span#kodenya').html());
-	
+
 	var Indexnya = $(this).parent().parent().parent().parent().index();
 	var NamaBarang = $(this).find('span#barangnya').html();
 	var Harganya = $(this).find('span#harganya').html();
@@ -503,7 +506,7 @@ $(document).on('keydown', 'body', function(e){
 		$('#ModalFooter').html("<button type='button' class='btn btn-primary' id='Simpanservice'>Ya, saya yakin</button><button type='button' class='btn btn-default' data-dismiss='modal'>Batal</button>");
 		$('#ModalGue').modal('show');
 
-		setTimeout(function(){ 
+		setTimeout(function(){
 	   		$('button#Simpanservice').focus();
 	    }, 500);
 
@@ -519,7 +522,7 @@ $(document).on('click', '#Simpann', function(){
 	$('#ModalFooter').html("<button type='button' class='btn btn-primary' id='Simpanservice'>Ya, saya yakin</button><button type='button' class='btn btn-default' data-dismiss='modal'>Batal</button>");
 	$('#ModalGue').modal('show');
 
-	setTimeout(function(){ 
+	setTimeout(function(){
    		$('button#Simpanservice').focus();
     }, 500);
 });
@@ -555,7 +558,7 @@ function Simpanservice()
 				alert(data.pesan);
 				window.location.href="<?php echo site_url('service/service'); ?>";
 			}
-			else 
+			else
 			{
 				$('.modal-dialog').removeClass('modal-lg');
 				$('.modal-dialog').addClass('modal-sm');
@@ -563,7 +566,7 @@ function Simpanservice()
 				$('#ModalContent').html(data.pesan);
 				$('#ModalFooter').html("<button type='button' class='btn btn-primary' data-dismiss='modal' autofocus>Ok</button>");
 				$('#ModalGue').modal('show');
-			}	
+			}
 		}
 	});
 }
